@@ -1,35 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<project name="Test" default="build" basedir=".">
+	<property name="output" location="${basedir}/buildOutput/"/>
 
-<project name="MyPhoto" default="build">
- <target name="build"
-   depends="prepare,lint,phpunit"/>
+	<target name="init">
+		<mkdir dir="${output}"/>
+		<mkdir dir="${output}/phpcs/"/>
+		<mkdir dir="${output}/pdepend/"/>
+	</target>
 
- <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/tests"/>
- </target>
+	<target name="build" depends="init, test">
+	</target>
 
- <target name="prepare" depends="clean" description="Prepare for build">
-  <delete dir="${basedir}/build/tests"/>
- </target>
-
- <target name="lint" description="Perform syntax check of sourcecode files">
-  <apply executable="php" failonerror="true">
-   <arg value="-l" />
-
-   <fileset dir="${basedir}/clases">
-    <include name="**/*.php" />
-    <modified />
-   </fileset>
-
-   <fileset dir="${basedir}/test">
-    <include name="**/*.php" />
-    <modified />
-   </fileset>
-  </apply>
- </target>
-
- <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="true"/>
- </target>
-
+	<target name="test">
+		<exec executable="phpunit" failonerror="true">
+			<arg line="--coverage-clover ${output}/CodeCoverage/clover.xml
+			--coverage-html ${output}/CodeCoverage/."/>
+		</exec>
+	</target>
 </project>
