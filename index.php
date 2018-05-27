@@ -1,7 +1,10 @@
 <?php
-require_once './clases/bbdd.php';
+// el archivo autoload inicializa todos lo archivos necesarios para que el framework funcione
+define("ROOT", "slidle");
 
-$dbMan = new DBManager('localhost', 'root', 'root', 'MyPhoto');
-$pict = $dbMan->GetPicture(2);
-print "Lat: $pict->latitud; Long: $pict->longitud <br />";  // DEBUG
-print "<img src='$pict->path' />";
+include "core/autoload.php";
+
+// cargamos el modulo iniciar.
+Core::loadModule("ventas");
+
+?>
